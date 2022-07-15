@@ -1,8 +1,12 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from rest_framework.response import Response 
+from rest_framework.decorators import api_view
+from .models import Player 
+from .serializers import PlayerSerializer
 
 # Create your views here.
 
+@api_view(['GET'])
 def getRoutes(request):
     routes = [
         {
@@ -18,7 +22,15 @@ def getRoutes(request):
             'description': 'Test get method'   
         },
     ]
-    return JsonResponse(routes, safe = False)
+    return Response(routes)
+
+@api_view(['GET'])
+def getPlayers(request):
+    players = Player.objects.all()
+    serializer = PlayerSerializer(players, many=True)
+    return Response(serializer.data)
 
 
 #python3 manage.py runserver
+
+#stopped at 41:18

@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class player(models.Model):
+class Player(models.Model):
     body = models.TextField(null=True, blank=True)
     updated = models.DateTimeField(auto_now = True)
 
