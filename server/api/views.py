@@ -21,6 +21,13 @@ def getRoutes(request):
             'body': None,
             'description': 'Test get method'   
         },
+        {
+            'Endpoint': '/test/getsingle',
+            'method': 'GET',
+            'body': None,
+            'description': 'Test get method, get one'   
+        },
+        
     ]
     return Response(routes)
 
@@ -28,6 +35,12 @@ def getRoutes(request):
 def getPlayers(request):
     players = Player.objects.all()
     serializer = PlayerSerializer(players, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getPlayer(request,pk):
+    players = Player.objects.get(id=pk)
+    serializer = PlayerSerializer(players, many=False)
     return Response(serializer.data)
 
 
