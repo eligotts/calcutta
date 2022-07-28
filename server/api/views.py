@@ -46,4 +46,4 @@ def getPlayer(request,pk):
 
 #python3 manage.py runserver
 
-#stopped at 41:18
+#stopped at 1:46:39
