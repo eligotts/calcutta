@@ -60,3 +60,5 @@ def updatePlayer(request,pk):
 #stopped at 1:58:16
 
 #look into the async await thing, might want to use it
+
+#when you make changes to the api, you have to run makemigrations, migrate, then clear cookies in the console for it to work

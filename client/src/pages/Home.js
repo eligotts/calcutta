@@ -9,8 +9,10 @@ function Home() {
   const [data, setData] = useState([{}])
   const [oldPrice, setOldPrice] = useState([{}])
 
+  const playerID = 2
+
   useEffect(() => {
-    fetch("/api/players/1/").then(
+    fetch(`/api/players/${playerID}/`).then(
       res => res.json()
     ).then(
       data => {
@@ -18,19 +20,19 @@ function Home() {
         console.log(data)
       }
     )
-  }, [])
+  }, [playerID])
 
   //could probably make this more efficient, try not to have two calls
   //need to figure out how to make an immutable variable
   useEffect(() => {
-    fetch("/api/players/1/").then(
+    fetch(`/api/players/${playerID}/`).then(
       res => res.json()
     ).then(
       oldPrice => {
         setOldPrice(oldPrice.price)
       }
     )
-  }, [])
+  }, [playerID])
 
 
   //to get a specific player
@@ -50,10 +52,10 @@ function Home() {
     console.log(data)
   }
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = (playerID) => {
     const isGreater = (price > oldPrice)
     if (isGreater) {
-    fetch('/api/players/1/update/', {
+    fetch(`/api/players/${playerID}/update/`, {
       method: 'PUT',
       body: JSON.stringify(
         data
@@ -74,7 +76,7 @@ function Home() {
               <label>Enter a price:</label>
               <input className="inp" required value={price} onChange={handleChange} type="number" name="price" autoComplete="off"/>
           </form>
-          <MDBBtn onClick={handleFormSubmit} color="amber">
+          <MDBBtn onClick={handleFormSubmit(playerID)} color="amber">
               CONTINUE
           </MDBBtn>
           <PlayerCard/>
