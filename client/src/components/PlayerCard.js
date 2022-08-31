@@ -1,13 +1,15 @@
 import React from 'react'
 
-function PlayerCard() {
+  export const PlayerCard = ({
+    player
+  }) => {
   return (
     <>
       <div>
-        <p>Player1</p>
+        <p>Name: {player.name}</p>
+        <p>Price: {player.price}</p>
       </div>
     </>
   )
 }
 
-export default PlayerCard
