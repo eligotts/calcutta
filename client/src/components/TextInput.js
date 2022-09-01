@@ -1,10 +1,11 @@
 import React,{useState, useEffect} from 'react'
 
   export const TextInput = ({
-    handleFormSubmit
+    handleFormSubmit,
+    playerID
   }) => {
     const [data, setData] = useState([{}])
-    const playerID = 3
+    //const playerID = 3
 
     useEffect(() => {
         fetch(`/api/players/${playerID}/`).then(

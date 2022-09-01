@@ -11,9 +11,11 @@ function Home() {
 
   //const [data, setData] = useState([{}])
   const [oldPrice, setOldPrice] = useState([{}])
+  const [playerID, setPlayerID] = useState(1)
+  const [numPlayers, setNumPlayers] = useState([{}])
 
 
-  const playerID = 3
+  //const playerID = 3
 
   // useEffect(() => {
   //   fetch(`/api/players/${playerID}/`).then(
@@ -24,6 +26,16 @@ function Home() {
   //     }
   //   )
   // }, [playerID])
+
+  useEffect(() => {
+    fetch('/api/numplayers/').then(
+      res => res.json()
+    ).then(
+      numPlayers => {
+        setNumPlayers(numPlayers)
+      }
+    )
+  }, [])
 
   //could probably make this more efficient, try not to have two calls
   //need to figure out how to make an immutable variable
@@ -70,10 +82,16 @@ function Home() {
   )}
 }
 
+const handleTimerDone = () => {
+  if (playerID < numPlayers) {
+    setPlayerID(playerID + 1)
+  }
+}
+
 const renderer = ({ hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
-    console.log("test")
+    return <p>Times up!</p>
   } else {
     // Render a countdown
     return <span>{seconds}</span>;
@@ -95,8 +113,8 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
               <input className="inp" required value={price} onChange={handleChange} type="number" name="price" autoComplete="off"/>
               <input type="submit" value="BID" />
           </form> */}
-          <TextInput handleFormSubmit={handleFormSubmit} onComplete={() => (console.log("test"))}/>
-          <Countdown date={Date.now() + 20000} key = {oldPrice.price} renderer={renderer}/>
+          <TextInput handleFormSubmit={handleFormSubmit} playerID={playerID}/>
+          <Countdown date={Date.now() + 20000} key = {oldPrice.price} renderer={renderer} onComplete={handleTimerDone}/>
           {/* <MDBBtn onClick={handleFormSubmit(playerID)} color="amber">
               BID
           </MDBBtn> */}

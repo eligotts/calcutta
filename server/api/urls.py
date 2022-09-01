@@ -6,4 +6,5 @@ urlpatterns = [
     path('players/', views.getPlayers, name="players"),
     path('players/<str:pk>/update/', views.updatePlayer, name="update-player"),
     path('players/<str:pk>/', views.getPlayer, name="players"),
+    path('numplayers/', views.getNumPlayers, name="num-players"),
 ]

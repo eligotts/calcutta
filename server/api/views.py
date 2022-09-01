@@ -39,6 +39,12 @@ def getPlayers(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def getNumPlayers(request):
+    # players = Player.objects.all()
+    # serializer = PlayerSerializer(players, many=True)
+    return Response(Player.objects.count())
+
+@api_view(['GET'])
 def getPlayer(request,pk):
     players = Player.objects.get(id=pk)
     serializer = PlayerSerializer(players, many=False)
