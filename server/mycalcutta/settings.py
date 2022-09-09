@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +44,16 @@ INSTALLED_APPS = [
     'rest_framework',
     "corsheaders",
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'asgi_redis.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('localhost', 6379)],
+        },
+        # 'ROUTING': 'mycalcutta.routing.channel_routing',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +87,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mycalcutta.wsgi.application'
+
+ASGI_APPLICATION = 'mycalcutta.asgi.application'
 
 
 # Database

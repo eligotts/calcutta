@@ -54,10 +54,17 @@ def getPlayer(request,pk):
 def updatePlayer(request,pk):
     data = request.data
     player = Player.objects.get(id = pk)
-    serializer = PlayerSerializer(instance=player, data=data)
+    price_object = Player._meta.get_field('price')
+    price = price_object.value_from_object(player)
 
-    if serializer.is_valid():
-        serializer.save()
+    if int(data['price']) > price:
+        serializer = PlayerSerializer(instance=player, data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+    else:
+        serializer = PlayerSerializer(player, many=False)
+
 
     return Response(serializer.data)
 

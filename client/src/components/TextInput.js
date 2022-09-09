@@ -30,7 +30,7 @@ import React,{useState, useEffect} from 'react'
     
     const handleFormSubmitArgs = (e) => {
         e.preventDefault()
-        handleFormSubmit(price,data)
+        handleFormSubmit(data)
     }
 
 
