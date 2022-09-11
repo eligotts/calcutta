@@ -1,4 +1,6 @@
 import React,{useState, useEffect} from 'react'
+import './css/TextInput.css'
+
 
   export const TextInput = ({
     handleFormSubmit,
@@ -13,8 +15,7 @@ import React,{useState, useEffect} from 'react'
         ).then(
         data => {
             setData(data)
-        }
-        )
+        })
     }, [playerID])
 
     const [price, setPrice] = useState('')
@@ -36,9 +37,9 @@ import React,{useState, useEffect} from 'react'
 
   return (
     <>
-        <form onSubmit={handleFormSubmitArgs}>
+        <form className="bid-form" onSubmit={handleFormSubmitArgs}>
           <label>Enter a price:</label>
-          <input className="inp" required value={price} onChange={handleChange} type="number" name="price" autoComplete="off"/>
+          <input required value={price} onChange={handleChange} type="number" name="price" autoComplete="off"/>
           <input type="submit" value="BID" />
         </form>
     </>

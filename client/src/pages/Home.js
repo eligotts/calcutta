@@ -4,6 +4,7 @@ import {PlayerCard} from '../components/PlayerCard'
 import {TextInput} from '../components/TextInput'
 import { MDBBtn } from 'mdb-react-ui-kit';
 import Countdown from 'react-countdown'
+import './css/Home.css'
 
 function Home() {
 
@@ -11,8 +12,9 @@ function Home() {
 
   //const [data, setData] = useState([{}])
   const [oldPrice, setOldPrice] = useState([{}])
-  const [playerID, setPlayerID] = useState(1)
-  const [numPlayers, setNumPlayers] = useState([{}])
+  const [curIndex, setCurIndex] = useState(0)
+  const [totPlayers, setTotPlayers] = useState([{}])
+  const playerIDs = []
 
 
   //const playerID = 3
@@ -28,14 +30,24 @@ function Home() {
   // }, [playerID])
 
   useEffect(() => {
-    fetch('/api/numplayers/').then(
+    fetch('/api/players/').then(
       res => res.json()
     ).then(
       numPlayers => {
-        setNumPlayers(numPlayers)
+        setTotPlayers(numPlayers)
       }
     )
   }, [])
+
+  for (let i = 0; i < totPlayers.length; i++) {
+    playerIDs.push(totPlayers[i]["id"])
+  }
+
+
+  const [playerID, setPlayerID] = useState(() => playerIDs[curIndex])
+  console.log(playerID)
+
+
 
   //could probably make this more efficient, try not to have two calls
   //need to figure out how to make an immutable variable
@@ -82,8 +94,9 @@ function Home() {
 
 
 const handleTimerDone = () => {
-  if (playerID < numPlayers) {
-    setPlayerID(playerID + 1)
+  if (curIndex < totPlayers.length - 1) {
+    setCurIndex(curIndex + 1)
+    setPlayerID(playerIDs[curIndex])
   }
 }
 
@@ -93,7 +106,7 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
     return <p>Times up!</p>
   } else {
     // Render a countdown
-    return <span>{seconds}</span>;
+    return <span>Time remaining: {seconds} seconds</span>;
   }
 }
 
@@ -138,29 +151,17 @@ useEffect(() => {
   return (
     <>
       <div>
-          {/* <script type='text/javascript'>
-            let socket = new WebSocket(`ws://${window.location.host}/ws/socket-server/`)
-
-            console.log(socket)
-
-            socket.onmessage = function(e) {
-              let data = JSON.parse(e.data)
-              console.log('Data:',data)
-            }
-          </script> */}
           <PlayerCard player = {oldPrice}/>
-          {/* <form onSubmit={handleFormSubmit}>
-              <label>Enter a price:</label>
-              <input className="inp" required value={price} onChange={handleChange} type="number" name="price" autoComplete="off"/>
-              <input type="submit" value="BID" />
-          </form> */}
           <TextInput handleFormSubmit={handleFormSubmit} playerID={playerID}/>
-          <Countdown date={Date.now() + 10000} key = {oldPrice.price} renderer={renderer} onComplete={handleTimerDone}/>
+      </div>
+      <div className="timer">
+          <Countdown className="timer" date={Date.now() + 10000} key = {oldPrice.price} renderer={renderer} onComplete={handleTimerDone}/>
+      </div>
           {/* <MDBBtn onClick={handleFormSubmit(playerID)} color="amber">
               BID
           </MDBBtn> */}
           {/* <button onClick={testSocket}>Test WebSocket</button> */}
-      </div>
+      
     </>
   )
 }

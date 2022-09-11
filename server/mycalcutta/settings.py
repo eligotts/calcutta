@@ -101,6 +101,12 @@ DATABASES = {
     }
 }
 
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MIGHT HAVE TO CHANGE THIS 
+MEDIA_ROOT = '/Users/eligottlieb/Documents/GitHub/calcutta/server/media'
+MEDIA_URL = '/media/'
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

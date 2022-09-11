@@ -50,6 +50,13 @@ def getPlayer(request,pk):
     serializer = PlayerSerializer(players, many=False)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def addPlayer(request):
+    data=request.data
+    player = Player(name=data['name'], price=0, img_link=data['img_link'])
+    player.save()
+    return Response(Player.objects.count())
+
 @api_view(['PUT'])
 def updatePlayer(request,pk):
     data = request.data
